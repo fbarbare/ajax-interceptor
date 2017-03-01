@@ -1,59 +1,43 @@
-ajax-interceptor
-================
+xhr-intercept
+-------------
 
-This permits to wire some request and response hooks on any Ajax calls.
-
-I find this handy, for exemple, to handle user session expiration and redirect the user to the login page whenever an Ajax call fails with an auth failure.
 
 Install
-==============
+-------
 
-Install it!
 ```
-npm install ajax-interceptor --save
+npm i -S xhr-intercept
 ```
-
-Use it! (with **Browserify**)
-```javascript
-var AjaxInterceptor = require("ajax-interceptor");
-```
-
-No other support for now, but feel free to contribute.
 
 
 API
-===============
+---
 
 ```javascript
-// Setup some callbacks
-AjaxInterceptor.addRequestCallback(function(xhr) {
-    console.debug("request",xhr);
-});
-AjaxInterceptor.addResponseCallback(function(xhr) {
-    console.debug("response",xhr);
-});
+import XhrIntercept from 'xhr-intercept';
 
-// Will proxify XHR to fire the above callbacks
-AjaxInterceptor.wire();
+function onRequest(xhr, args) {
+  console.debug('request', xhr);
 
-// Do some requests
-// ................
+  // Return false to cancel the request
+  return false;
+}
 
-// Will restore XHR and not fire anymore the callbacks
-AjaxInterceptor.unwire();
+function onResponse(xhr) {
+  console.debug('request', xhr);
+}
+
+// Add a callback on request or response
+XhrIntercept.addRequestCallback(onRequest);
+XhrIntercept.addResponseCallback(onResponse);
+
+// Starting intercepting requests
+XhrIntercept.wire();
+
+// Remove a callback on request or response
+XhrIntercept.removeRequestCallback(onRequest);
+XhrIntercept.removeResponseCallback(onResponse);
+
+// Stopping intercepting requests
+XhrIntercept.unwire();
 ```
-
-You can add and remove callbacks dynamically while the interceptor is wired.
-
-
-
-Alternatives
-===================
-
-If you just want to be able to intercept JQuery $.ajax() calls, [Global Ajax Event Handlers](http://api.jquery.com/category/ajax/global-ajax-event-handlers/) also work.
-
-License
-===================
-
-MIT
-

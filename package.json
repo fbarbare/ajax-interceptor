@@ -1,20 +1,32 @@
 {
-    "name": "ajax-interceptor",
-    "version": "1.0.1",
-    "description": "Permits to intercept Ajax calls. Useful to detect disconnected user or things like that",
-    "keywords": [
-        "xhr",
-        "ajax",
-        "aop",
-        "proxy",
-        "interceptor"
-    ],
-    "author": "Sebastien Lorber",
-    "homepage": "https://github.com/slorber/ajax-interceptor",
-    "bugs": "https://github.com/slorber/ajax-interceptor/issues",
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/slorber/ajax-interceptor"
-    }
+  "name": "xhr-intercept",
+  "version": "0.1.1",
+  "description": "Allows you to intercept XHR requests. Useful to detect disconnected users, delaying calls while reconnecting them, things like that.",
+  "keywords": [
+    "xhr",
+    "http",
+    "request",
+    "ajax",
+    "aop",
+    "proxy",
+    "intercept",
+    "interceptor"
+  ],
+  "author": "Florian Barbare",
+  "homepage": "https://github.com/fbarbare/xhr-intercept",
+  "bugs": "https://github.com/fbarbare/xhr-intercept/issues",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fbarbare/xhr-intercept"
+  },
+  "main": "./script.js",
+  "scripts": {
+    "prepublish": "babel index.js --out-file script.js"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.23.0",
+    "babel-preset-es2015": "^6.22.0"
+  }
 }
