@@ -1,6 +1,7 @@
 'use strict';
 
 const XMLHttpRequestSend = XMLHttpRequest.prototype.send;
+const XMLHttpRequestOpen = XMLHttpRequest.prototype.open;
 
 var reqCallbacks = [];
 var resCallbacks = [];
@@ -26,6 +27,12 @@ export function removeResponseCallback(callback) {
 export function wire() {
   if (wired) { throw new Error('Ajax interceptor already wired'); }
 
+  XMLHttpRequest.prototype.open = function(method, url) {
+    this._method = method;
+    this._url = url;
+    XMLHttpRequestOpen.apply(this, arguments);
+  };
+
   XMLHttpRequest.prototype.send = function() {
     var reqCallbacksRes = reqCallbacks.map(callback => callback(this, arguments));
     var onreadystatechange = this.onreadystatechange;
@@ -47,6 +54,7 @@ export function wire() {
 export function unwire() {
   if (!wired) { throw new Error('Ajax interceptor not currently wired'); }
 
+  XMLHttpRequest.prototype.open = XMLHttpRequestOpen;
   XMLHttpRequest.prototype.send = XMLHttpRequestSend;
   wired = false;
 };
